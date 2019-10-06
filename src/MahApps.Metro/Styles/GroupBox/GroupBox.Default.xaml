@@ -5,7 +5,8 @@
 
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
     <Converters:CornerRadiusBindingConverter x:Key="CornerRadiusBindingConverter" />
-
+    <Converters:BorderThicknessToNegativeMarginConverter x:Key="BorderThicknessToNegativeMarginConverter" />
+    
     <Thickness x:Key="GroupBoxHeaderThemePadding">4</Thickness>
 
     <Style x:Key="MahApps.Styles.GroupBox" TargetType="{x:Type GroupBox}">
@@ -21,20 +22,27 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
-                    <Grid x:Name="GroupBoxRoot">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Border x:Name="HeaderSite"
+                    <Border Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            UseLayoutRounding="True">
+                        <Grid x:Name="GroupBoxRoot">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border x:Name="HeaderSite"
                                 Grid.Row="0"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Bottom}}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource BorderThicknessToNegativeMarginConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Bottom}}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True">
-                            <Controls:ContentControlEx x:Name="HeaderContent"
+                                <Controls:ContentControlEx x:Name="HeaderContent"
                                                        Margin="{DynamicResource GroupBoxHeaderThemePadding}"
                                                        Content="{TemplateBinding Header}"
                                                        ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
@@ -48,34 +56,35 @@
                                                        RecognizesAccessKey="True"
                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                        UseLayoutRounding="False">
-                                <TextElement.Foreground>
-                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding Mode="OneWay"
+                                    <TextElement.Foreground>
+                                        <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                            <Binding Mode="OneWay"
                                                  Path="Background"
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
-                                        <Binding Mode="OneWay"
+                                            <Binding Mode="OneWay"
                                                  Path="(Controls:HeaderedControlHelper.HeaderForeground)"
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
-                                    </MultiBinding>
-                                </TextElement.Foreground>
-                            </Controls:ContentControlEx>
-                        </Border>
-                        <Border Grid.Row="1"
-                                Background="Transparent"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:ThicknessSideType.Top}}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Converter={StaticResource CornerRadiusBindingConverter}, ConverterParameter={x:Static Converters:RadiusType.Top}}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                UseLayoutRounding="True">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                        </MultiBinding>
+                                    </TextElement.Foreground>
+                                </Controls:ContentControlEx>
+                            </Border>
+                            <ContentPresenter Grid.Row="1" 
+                                                  Margin="{TemplateBinding Padding}"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               Cursor="{TemplateBinding Cursor}"
                                               UseLayoutRounding="False" />
-                        </Border>
-                    </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:HeaderedControlHelper.UseCornerRadiusAtHeader" Value="True">
+                            <Setter TargetName="HeaderSite" Property="CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius)}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
     </Style>
 </ResourceDictionary>

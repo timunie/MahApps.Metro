@@ -95,6 +95,7 @@
                         </Grid.RowDefinitions>
                         <GroupBox Grid.Row="0"
                                   Margin="20"
+                                  Controls:ControlsHelper.CornerRadius="5"
                                   Header="Into Space">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>

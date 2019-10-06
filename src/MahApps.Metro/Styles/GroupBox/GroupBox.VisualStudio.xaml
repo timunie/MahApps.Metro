@@ -11,6 +11,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Border.Normal}" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
+        <Setter Property="Controls:ControlsHelper.CornerRadius" Value="0" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
         <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
@@ -42,6 +43,7 @@
                                 Background="Transparent"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding Controls:ControlsHelper.CornerRadius}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True">
                             <ContentPresenter Margin="{TemplateBinding Padding}"

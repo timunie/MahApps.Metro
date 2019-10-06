@@ -9,7 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/GroupBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/GroupBox/GroupBox.VisualStudio.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Expander.xaml" />
     </ResourceDictionary.MergedDictionaries>
 

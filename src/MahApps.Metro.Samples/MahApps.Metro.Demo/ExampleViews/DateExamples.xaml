@@ -103,7 +103,11 @@
                     </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
 
-                <GroupBox Header="Try it yourself">
+                <GroupBox Header="Try it yourself"
+                          BorderThickness="2"
+                          BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                          Controls:ControlsHelper.CornerRadius="10"
+                          Controls:HeaderedControlHelper.UseCornerRadiusAtHeader="True">
                     <StackPanel>
                         <CheckBox Name="DateTimePickerIsEnabled"
                                   Content="IsEnabled"
@@ -237,7 +241,8 @@
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                  SelectedDateFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerDateFormat}"
                                                  SelectedTimeFormat="{Binding Path=SelectedItem, ElementName=DateTimePickerTimeFormat}" />
-                        <GroupBox Header="Current time">
+                        <GroupBox Header="Current time"
+                                  Controls:ControlsHelper.CornerRadius="6">
                             <AdornerDecorator>
                                 <StackPanel>
                                     <Controls:DateTimePicker x:Name="DateTimePicker"
