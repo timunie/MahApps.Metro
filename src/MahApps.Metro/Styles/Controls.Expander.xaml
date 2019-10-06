@@ -334,7 +334,7 @@
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -374,7 +374,7 @@
                                                      Path="Background"
                                                      RelativeSource="{RelativeSource TemplatedParent}" />
                                             <Binding Mode="OneWay"
-                                                     Path="(Controls:GroupBoxHelper.HeaderForeground)"
+                                                     Path="(Controls:HeaderedControlHelper.HeaderForeground)"
                                                      RelativeSource="{RelativeSource TemplatedParent}" />
                                         </MultiBinding>
                                     </ToggleButton.Foreground>

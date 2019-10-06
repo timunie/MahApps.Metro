@@ -12,7 +12,7 @@
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.GroupBox.HeaderThemeFont}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -35,7 +35,7 @@
                                                    FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                    FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                    FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
+                                                   Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                                    RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Border Grid.Row="1"

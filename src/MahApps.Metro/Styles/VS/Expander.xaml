@@ -333,7 +333,7 @@
         <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Left.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderRightStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Right.VisualStudio}" />
         <Setter Property="Controls:ExpanderHelper.HeaderUpStyle" Value="{StaticResource MahApps.Styles.ToggleButton.ExpanderHeader.Up.VisualStudio}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Foreground}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -357,7 +357,7 @@
                                           FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                           FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                           FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                          Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
+                                          Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                           IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}" />

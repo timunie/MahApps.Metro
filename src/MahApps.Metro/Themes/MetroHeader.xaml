@@ -5,7 +5,7 @@
     <Style x:Key="MahApps.Styles.MetroHeader" TargetType="{x:Type Controls:MetroHeader}">
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Normal}" />
         <Setter Property="Controls:ControlsHelper.HeaderMargin" Value="0 0 0 2" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Mode=OneWay}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -29,7 +29,7 @@
                                                    FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                    FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                    FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
+                                                   Foreground="{TemplateBinding Controls:HeaderedControlHelper.HeaderForeground}"
                                                    IsTabStop="False"
                                                    RecognizesAccessKey="True"
                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />

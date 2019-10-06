@@ -14,7 +14,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource MahApps.Sizes.Font.Content}" />
-        <Setter Property="Controls:GroupBoxHelper.HeaderForeground" Value="{x:Null}" />
+        <Setter Property="Controls:HeaderedControlHelper.HeaderForeground" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Black}" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -54,7 +54,7 @@
                                                  Path="Background"
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
                                         <Binding Mode="OneWay"
-                                                 Path="(Controls:GroupBoxHelper.HeaderForeground)"
+                                                 Path="(Controls:HeaderedControlHelper.HeaderForeground)"
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </TextElement.Foreground>
