@@ -3,11 +3,13 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:MahApps="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
                       xmlns:MetroDemo="clr-namespace:MetroDemo"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       Title="MahApps.Metro - Demo Application"
                       Width="900"
                       Height="600"
@@ -43,13 +45,17 @@
             <Ellipse x:Key="AccentMenuIcon"
                      Width="16"
                      Height="16"
-                     x:Shared="False"
-                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+                     x:Shared="False">
+                <Ellipse.Fill>
+                    <SolidColorBrush Color="{Binding Value}" />
+                </Ellipse.Fill>
+            </Ellipse>
 
             <Style x:Key="AppThemeMenuItemStyle"
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
-                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Command" Value="{x:Static MetroDemo:MainWindowViewModel.ChangeBaseColor_Command}" />
+                <Setter Property="CommandParameter" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AppThemeMenuIcon}" />
             </Style>
@@ -57,8 +63,9 @@
             <Style x:Key="AccentColorMenuItemStyle"
                    BasedOn="{StaticResource MahApps.Styles.MenuItem}"
                    TargetType="{x:Type MenuItem}">
-                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
-                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Command" Value="{x:Static MetroDemo:MainWindowViewModel.ChangeAccentColor_Command}" />
+                <Setter Property="CommandParameter" Value="{Binding Value, Mode=OneWay}" />
+                <Setter Property="Header" Value="{Binding Key, Mode=OneWay}" />
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
             </Style>
 
@@ -73,12 +80,12 @@
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
-                    <TextBlock Height="30"
-                               Margin="0 4"
-                               Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                    <TextBlock Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                               Height="30"
+                               Margin="0,4"
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog"
-                            Content="Close Me!"
+                    <Button Content="Close Me!"
+                            Click="CloseCustomDialog"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
@@ -103,23 +110,23 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowLastSeparator="False">
-            <Button Click="LaunchFlyoutDemo"
-                    Content="Flyouts"
+            <Button Content="Flyouts"
+                    Click="LaunchFlyoutDemo"
                     ToolTip="Flyouts demo window" />
-            <Button Click="LaunchIcons"
-                    Content="IconPacks"
+            <Button Content="IconPacks"
+                    Click="LaunchIcons"
                     ToolTip="All MahApp icons" />
-            <Button Click="LaunchVisualStudioDemo"
-                    Content="VS"
+            <Button Content="VS"
+                    Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo" />
-            <Button Click="LauchCleanDemo"
-                    Content="Clean"
+            <Button Content="Clean"
+                    Click="LauchCleanDemo"
                     ToolTip="Clean window style demo" />
-            <Button Click="InteropDemo"
-                    Content="Interop"
+            <Button Content="Interop"
+                    Click="InteropDemo"
                     ToolTip="The interop demo" />
-            <Button Click="LaunchNavigationDemo"
-                    Content="Navigation"
+            <Button Content="Navigation"
+                    Click="LaunchNavigationDemo"
                     ToolTip="Window navigation demo" />
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
@@ -141,9 +148,19 @@
             <MenuItem Header="Theme"
                       ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}"
                       ItemsSource="{Binding AppThemes, Mode=OneWay}" />
-            <MenuItem Header="Accent"
-                      ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
-                      ItemsSource="{Binding AccentColors, Mode=OneWay}" />
+            <MenuItem Header="Accent">
+                <MenuItem Header="Buildin Accents"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
+                          ItemsSource="{x:Static MahApps:ThemeManagerHelper.AccentColors}" />
+                <MenuItem Click="CreateCustomAccent_Click" Header="Custom Accent" />
+                <Separator />
+                <MenuItem Header="Use Non-Transparent Background"
+                          IsCheckable="True"
+                          IsChecked="{Binding UseNonTransparentAccents, Mode=TwoWay}" />
+            </MenuItem>
+
+
+
             <MenuItem Header="Dialogs">
                 <MenuItem Header="Use Accent?"
                           IsCheckable="True"

@@ -54,6 +54,53 @@ namespace MetroDemo
 
     public class MainWindowViewModel : ViewModelBase, IDataErrorInfo, IDisposable
     {
+
+        #region ChangeAppTheme_DifferentImplementation
+
+        private static Color _AccentColor = ThemeManagerHelper.AccentColors["Blue"];
+        public Color AccentColor
+        {
+            get { return _AccentColor; }
+            set { _AccentColor = value; OnPropertyChanged("AccentColor"); SetTheme();  }
+        }
+
+        private static bool _UseNonTransparentAccents;
+        public bool UseNonTransparentAccents
+        {
+            get { return _UseNonTransparentAccents; }
+            set { _UseNonTransparentAccents = value; OnPropertyChanged("UseNonTransparentAccents"); SetTheme(); }
+        }
+
+        private static string _BaseColorScheme = "Light";
+        public string BaseColorScheme
+        {
+            get { return _BaseColorScheme = "Light"; }
+            set { _BaseColorScheme = value; OnPropertyChanged("BaseColorScheme"); }
+        }
+
+        public static SimpleCommand ChangeBaseColor_Command => new SimpleCommand(execute: (parameter) => ChangeBaseColor_Execute(parameter)) ;
+        static void ChangeBaseColor_Execute(object Parameter)
+        {
+            _BaseColorScheme = Parameter.ToString();
+            SetTheme();
+        }
+
+
+        public static SimpleCommand ChangeAccentColor_Command => new SimpleCommand(execute: (parameter) => ChangeAccentColor_Execute(parameter));
+        static void ChangeAccentColor_Execute(object Parameter)
+        {
+            _AccentColor = (Color)Parameter;
+            SetTheme();
+        }
+
+
+        static void SetTheme()
+        {
+            ThemeManagerHelper.CreateAppStyleBy(_AccentColor, _BaseColorScheme, _UseNonTransparentAccents );
+        }
+
+        #endregion
+
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.ExampleViews;
 using MetroDemo.ExampleWindows;
 
 namespace MetroDemo
@@ -500,5 +501,21 @@ namespace MetroDemo
                 this.ShowModalMessageExternal("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
+
+        private async void CreateCustomAccent_Click(object sender, RoutedEventArgs e)
+        {
+            var dialogContent = new CustomAccentDialog() { DataContext = this.DataContext };
+            
+            var accentDialog = new CustomDialog() 
+            { 
+                Title = "Select your Accent", 
+                Content = dialogContent
+            };
+
+            dialogContent.CloseButton.Click += async (s, param) => { await this.HideMetroDialogAsync(accentDialog); };
+
+            await this.ShowMetroDialogAsync(accentDialog);
+        }
+
     }
 }
