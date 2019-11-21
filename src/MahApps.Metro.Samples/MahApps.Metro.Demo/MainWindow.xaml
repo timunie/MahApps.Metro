@@ -173,7 +173,9 @@
                                                   ShowRecentColors="True"
                                                   UsingAlphaChannel="False" />
 
-                                <CheckBox Content="Use non-Transparent Accents" IsChecked="{Binding UseNonTransparentAccents, Mode=TwoWay}" />
+                                <CheckBox Content="Use non-Transparent Accents"
+                                          Background="White"
+                                          IsChecked="{Binding UseNonTransparentAccents, Mode=TwoWay}" />
 
                             </StackPanel>
                         </GroupBox>
