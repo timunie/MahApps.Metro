@@ -9,6 +9,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:sys="clr-namespace:System;assembly=mscorlib"
                       xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                       Title="MahApps.Metro - Demo Application"
                       Width="900"
@@ -131,8 +132,56 @@
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
                           ToolTip="Enable quit confirmation dialog on exit" />
+            <ToggleButton x:Name="ShowAccents">
+                <iconPacks:PackIconFontAwesome Kind="PaintRollerSolid" />
+            </ToggleButton>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout Header="Change App-Syle"
+                             IsOpen="{Binding ElementName=ShowAccents, Path=IsChecked, Mode=TwoWay}"
+                             Position="Right"
+                             Theme="Accent">
+                <ScrollViewer>
+                    <StackPanel>
+                        <GroupBox Header="Themes">
+                            <ItemsControl>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding}"
+                                                Command="{x:Static MetroDemo:MainWindowViewModel.ChangeBaseColor_Command}"
+                                                CommandParameter="{Binding}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsSource>
+                                    <CompositeCollection>
+                                        <sys:String>Light</sys:String>
+                                        <sys:String>Dark</sys:String>
+                                    </CompositeCollection>
+                                </ItemsControl.ItemsSource>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <GroupBox Header="Accent">
+                            <StackPanel>
+                                <xctk:ColorPicker DisplayColorAndName="True"
+                                                  DropDownBackground="Black"
+                                                  SelectedColor="{Binding AccentColor}"
+                                                  ShowAvailableColors="True"
+                                                  ShowRecentColors="True"
+                                                  UsingAlphaChannel="False" />
+
+                                <CheckBox Content="Use non-Transparent Accents" IsChecked="{Binding UseNonTransparentAccents, Mode=TwoWay}" />
+
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
 
     <Grid>
         <Grid.RowDefinitions>
