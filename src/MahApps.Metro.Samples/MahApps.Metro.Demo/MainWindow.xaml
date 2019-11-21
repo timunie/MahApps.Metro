@@ -74,7 +74,7 @@
 
                 <StackPanel>
                     <TextBlock Height="30"
-                               Margin="0 4"
+                               Margin="0,4"
                                Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
                     <Button Click="CloseCustomDialog"
@@ -134,6 +134,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Controls:TextBoxButtonsContainer>
+            <Controls:TextBoxButtonsContainer.Items>
+                <Button />
+                <TextBox />
+            </Controls:TextBoxButtonsContainer.Items>
+        </Controls:TextBoxButtonsContainer>
         <Menu Grid.Row="0"
               Margin="5"
               HorizontalAlignment="Left"
