@@ -73,12 +73,12 @@
             <UserControl x:Key="CustomCloseDialogTest" x:Name="CustomCloseDialogTest">
 
                 <StackPanel>
-                    <TextBlock Height="30"
+                    <TextBlock Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                               Height="30"
                                Margin="0,4"
-                               Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
                                TextWrapping="Wrap" />
-                    <Button Click="CloseCustomDialog"
-                            Content="Close Me!"
+                    <Button Content="Close Me!"
+                            Click="CloseCustomDialog"
                             Style="{DynamicResource MahApps.Styles.Button.Dialogs}" />
                 </StackPanel>
 
@@ -103,23 +103,23 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands ShowLastSeparator="False">
-            <Button Click="LaunchFlyoutDemo"
-                    Content="Flyouts"
+            <Button Content="Flyouts"
+                    Click="LaunchFlyoutDemo"
                     ToolTip="Flyouts demo window" />
-            <Button Click="LaunchIcons"
-                    Content="IconPacks"
+            <Button Content="IconPacks"
+                    Click="LaunchIcons"
                     ToolTip="All MahApp icons" />
-            <Button Click="LaunchVisualStudioDemo"
-                    Content="VS"
+            <Button Content="VS"
+                    Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo" />
-            <Button Click="LauchCleanDemo"
-                    Content="Clean"
+            <Button Content="Clean"
+                    Click="LauchCleanDemo"
                     ToolTip="Clean window style demo" />
-            <Button Click="InteropDemo"
-                    Content="Interop"
+            <Button Content="Interop"
+                    Click="InteropDemo"
                     ToolTip="The interop demo" />
-            <Button Click="LaunchNavigationDemo"
-                    Content="Navigation"
+            <Button Content="Navigation"
+                    Click="LaunchNavigationDemo"
                     ToolTip="Window navigation demo" />
             <ToggleButton Content="Confirm quit"
                           IsChecked="{Binding QuitConfirmationEnabled}"
@@ -134,12 +134,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Controls:TextBoxButtonsContainer>
-            <Controls:TextBoxButtonsContainer.Items>
-                <Button />
-                <TextBox />
-            </Controls:TextBoxButtonsContainer.Items>
-        </Controls:TextBoxButtonsContainer>
         <Menu Grid.Row="0"
               Margin="5"
               HorizontalAlignment="Left"
@@ -242,6 +236,20 @@
         </Menu>
 
         <Controls:MetroAnimatedSingleRowTabControl x:Name="MainTabControl" Grid.Row="1">
+            <TabItem Header="TEST">
+                <StackPanel>
+                    <TextBox>
+                        <Controls:TextBoxHelper.TextBoxButtons>
+                            <Controls:TextBoxButtonsContainer>
+                                <Button Content="1" Background="LightSkyBlue" />
+                                <Button Content="2"
+                                        Background="LightGray"
+                                        Foreground="Blue" />
+                            </Controls:TextBoxButtonsContainer>
+                        </Controls:TextBoxHelper.TextBoxButtons>
+                    </TextBox>
+                </StackPanel>
+            </TabItem>
             <TabItem Header="buttons">
                 <ScrollViewer Margin="2"
                               HorizontalScrollBarVisibility="Auto"

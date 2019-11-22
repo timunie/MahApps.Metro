@@ -43,6 +43,26 @@ namespace MahApps.Metro.Controls
     /// </remarks>
     public class TextBoxHelper
     {
+
+
+
+        public static TextBoxButtonsContainer GetTextBoxButtons(DependencyObject obj)
+        {
+            return (TextBoxButtonsContainer)obj.GetValue(TextBoxButtonsProperty);
+        }
+
+        public static void SetTextBoxButtons(DependencyObject obj, TextBoxButtonsContainer value)
+        {
+            obj.SetValue(TextBoxButtonsProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for TextBoxButtons.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TextBoxButtonsProperty =
+            DependencyProperty.RegisterAttached("TextBoxButtons", typeof(TextBoxButtonsContainer), typeof(TextBoxHelper), new PropertyMetadata(null));
+
+
+
+
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextBoxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty WatermarkAlignmentProperty = DependencyProperty.RegisterAttached("WatermarkAlignment", typeof(TextAlignment), typeof(TextBoxHelper), new FrameworkPropertyMetadata(TextAlignment.Left, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));

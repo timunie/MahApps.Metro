@@ -74,15 +74,15 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                             <TextBlock x:Name="PART_Message"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="4 0"
+                                       Margin="4,0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
-                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
@@ -91,7 +91,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="4 0"
+                                            Margin="4,0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -104,11 +104,11 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
                                     <TextBlock.RenderTransform>
@@ -128,13 +128,18 @@
                                 </TextBlock>
                             </ContentControl>
 
+                            <ContentControl Content="{TemplateBinding Controls:TextBoxHelper.TextBoxButtons}"
+                                            Grid.Row="0"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="1" />
+
                             <Button x:Name="PART_ClearText"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
-                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
                                     FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
@@ -304,15 +309,15 @@
                                           IsTabStop="False" />
 
                             <TextBlock x:Name="PART_Message"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="4 0"
+                                       Margin="4,0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
-                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
@@ -321,7 +326,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="4 0"
+                                            Margin="4,0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -334,11 +339,11 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
                                     <TextBlock.RenderTransform>
@@ -359,12 +364,12 @@
                             </ContentControl>
 
                             <Button x:Name="PART_ClearText"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
-                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
                                     FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
@@ -498,12 +503,12 @@
                 <DataTemplate>
                     <!--  Modern - Magnify  -->
                     <ContentControl x:Name="PART_PackIcon"
+                                    Content="M42.5,22A12.5,12.5 0 0,1 55,34.5A12.5,12.5 0 0,1 42.5,47C40.14,47 37.92,46.34 36,45.24L26.97,54.27C25.8,55.44 23.9,55.44 22.73,54.27C21.56,53.1 21.56,51.2 22.73,50.03L31.8,40.96C30.66,39.08 30,36.86 30,34.5A12.5,12.5 0 0,1 42.5,22M42.5,26A8.5,8.5 0 0,0 34,34.5A8.5,8.5 0 0,0 42.5,43A8.5,8.5 0 0,0 51,34.5A8.5,8.5 0 0,0 42.5,26Z"
                                     Width="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
                                     Height="{Binding RelativeSource={RelativeSource AncestorType=TextBox}, Path=(Controls:TextBoxHelper.ButtonWidth), Mode=OneWay}"
                                     Padding="3"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Content="M42.5,22A12.5,12.5 0 0,1 55,34.5A12.5,12.5 0 0,1 42.5,47C40.14,47 37.92,46.34 36,45.24L26.97,54.27C25.8,55.44 23.9,55.44 22.73,54.27C21.56,53.1 21.56,51.2 22.73,50.03L31.8,40.96C30.66,39.08 30,36.86 30,34.5A12.5,12.5 0 0,1 42.5,22M42.5,26A8.5,8.5 0 0,0 34,34.5A8.5,8.5 0 0,0 42.5,43A8.5,8.5 0 0,0 51,34.5A8.5,8.5 0 0,0 42.5,26Z"
                                     Style="{DynamicResource MahApps.Styles.ContentControl.PathIcon}" />
                 </DataTemplate>
             </Setter.Value>
@@ -557,7 +562,7 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Text}" />
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="MinWidth" Value="10" />
-        <Setter Property="Padding" Value="2 4" />
+        <Setter Property="Padding" Value="2,4" />
         <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -597,15 +602,15 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                             <TextBlock x:Name="PART_Message"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="4 0"
+                                       Margin="4,0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
-                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
@@ -614,7 +619,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="4 0"
+                                            Margin="4,0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -627,11 +632,11 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
                                     <TextBlock.RenderTransform>
@@ -652,12 +657,12 @@
                             </ContentControl>
 
                             <Button x:Name="PART_ClearText"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{TemplateBinding Controls:TextBoxHelper.ButtonWidth}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
-                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
                                     FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
@@ -803,15 +808,15 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
                             <TextBlock x:Name="PART_Message"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Grid.Row="1"
                                        Grid.Column="0"
-                                       Margin="6 0"
+                                       Margin="6,0"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Style="{DynamicResource MahApps.Styles.TextBlock.Watermark}"
-                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                        TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}"
                                        TextWrapping="{TemplateBinding Controls:TextBoxHelper.WatermarkWrapping}"
@@ -820,7 +825,7 @@
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Row="0"
                                             Grid.Column="0"
-                                            Margin="6 0"
+                                            Margin="6,0"
                                             Style="{DynamicResource MahApps.Styles.ContentControl.FloatingMessageContainer}">
                                 <ContentControl.Height>
                                     <MultiBinding Converter="{Converters:MathMultiplyConverter}">
@@ -833,11 +838,11 @@
                                     </MultiBinding>
                                 </ContentControl.Height>
                                 <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Style="{DynamicResource MahApps.Styles.TextBlock.AutoCollapsing}"
-                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            TextAlignment="{TemplateBinding Controls:TextBoxHelper.WatermarkAlignment}"
                                            TextTrimming="{TemplateBinding Controls:TextBoxHelper.WatermarkTrimming}">
                                     <TextBlock.RenderTransform>
@@ -858,6 +863,7 @@
                             </ContentControl>
 
                             <Button x:Name="PART_ClearText"
+                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
@@ -865,7 +871,6 @@
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="False"
                                     Command="{TemplateBinding Controls:TextBoxHelper.ButtonCommand}"
                                     CommandParameter="{TemplateBinding Controls:TextBoxHelper.ButtonCommandParameter}"
-                                    Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
                                     ContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
                                     Focusable="False"
                                     FontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
