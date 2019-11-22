@@ -131,7 +131,8 @@
                             <ContentControl Content="{TemplateBinding Controls:TextBoxHelper.TextBoxButtons}"
                                             Grid.Row="0"
                                             Grid.RowSpan="2"
-                                            Grid.Column="1" />
+                                            Grid.Column="1"
+                                            Tag="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}" />
 
                             <Button x:Name="PART_ClearText"
                                     Content="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"

@@ -44,8 +44,6 @@ namespace MahApps.Metro.Controls
     public class TextBoxHelper
     {
 
-
-
         public static TextBoxButtonsContainer GetTextBoxButtons(DependencyObject obj)
         {
             return (TextBoxButtonsContainer)obj.GetValue(TextBoxButtonsProperty);
@@ -61,6 +59,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("TextBoxButtons", typeof(TextBoxButtonsContainer), typeof(TextBoxHelper), new PropertyMetadata(null));
 
 
+        
 
 
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));

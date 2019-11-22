@@ -248,6 +248,8 @@
                             </Controls:TextBoxButtonsContainer>
                         </Controls:TextBoxHelper.TextBoxButtons>
                     </TextBox>
+
+                    <TextBox Controls:TextBoxHelper.TextBoxButtons="{StaticResource MahApps.ClearButton.Default}" />
                 </StackPanel>
             </TabItem>
             <TabItem Header="buttons">

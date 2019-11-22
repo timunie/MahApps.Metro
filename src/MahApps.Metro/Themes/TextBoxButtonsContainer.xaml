@@ -9,6 +9,8 @@
         <Style.Resources>
             <Style BasedOn="{StaticResource MahApps.Styles.Button.Chromeless}" TargetType="Button">
                 <Setter Property="Width" Value="22" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
             </Style>
         </Style.Resources>
 
@@ -22,13 +24,28 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel IsItemsHost="True" Orientation="Horizontal" />
+                    <StackPanel Focusable="False"
+                                IsItemsHost="True"
+                                Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
+
+    <mah:TextBoxButtonsContainer x:Key="MahApps.ClearButton.Default">
+        <Button Content="r"
+                Width="22"
+                Command="{x:Static mah:MahAppsCommands.ClearControlCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl}, Path=Tag}"
+                Focusable="False"
+                FontFamily="Marlett"
+                FontSize="{DynamicResource MahApps.Font.Size.Button.ClearText}"
+                IsTabStop="False"
+                Style="{StaticResource MahApps.Styles.Button.Chromeless}" />
+    </mah:TextBoxButtonsContainer>
 
 </ResourceDictionary>

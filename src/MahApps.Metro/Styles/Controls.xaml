@@ -44,13 +44,14 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HamburgerMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/RangeSlider.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/TextBoxButtonsContainer.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MahApps.Styles.ContentControl.FloatingMessageContainer" TargetType="{x:Type ContentControl}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Margin" Value="5 0" />
+        <Setter Property="Margin" Value="5,0" />
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
 

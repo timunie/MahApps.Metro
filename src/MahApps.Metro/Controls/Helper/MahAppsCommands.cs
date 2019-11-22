@@ -16,6 +16,16 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+            switch (args.Parameter)
+            {
+                case TextBox textBox:
+                    textBox.ClearValue(TextBox.TextProperty);
+                    break;
+                default:
+                    break;
+            }
+
+
             if (!(args.OriginalSource is DependencyObject control) || false == TextBoxHelper.GetClearTextButton(control))
             {
                 return;
