@@ -19,6 +19,8 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = nameof(PART_PopupListBox), Type = typeof(ListBox))]
     [TemplatePart(Name = nameof(PART_Popup), Type = typeof(Popup))]
+    [TemplatePart(Name = nameof(PART_SelectedItemsScrollViewer), Type = typeof(ScrollViewer))]
+    [StyleTypedProperty(Property = nameof(SelectedItemContainerStyle), StyleTargetType = typeof(FrameworkElement))]
     
     public class MultiSelectionComboBox : ComboBox
     {
@@ -42,6 +44,7 @@ namespace MahApps.Metro.Controls
         private Popup PART_Popup;
         private ListBox PART_PopupListBox;
         private TextBox PART_EditableTextBox;
+        private ScrollViewer PART_SelectedItemsScrollViewer;
 
         #endregion
 
@@ -86,12 +89,19 @@ namespace MahApps.Metro.Controls
         public static new readonly DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public new int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
+
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public new object SelectedValue
         {
             get { return (object)GetValue(SelectedValueProperty); }
@@ -129,6 +139,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DisplaySelectedItemsProperty =
             DependencyProperty.Register(nameof(DisplaySelectedItems), typeof(IEnumerable), typeof(MultiSelectionComboBox), new PropertyMetadata((IEnumerable)null));
 
+        /// <summary>
+        /// Gets the <see cref="SelectedItems"/> in the specified order which was set via <see cref="OrderSelectedItemsBy"/>
+        /// </summary>
         public IEnumerable DisplaySelectedItems
         {
             get { return (IEnumerable)GetValue(DisplaySelectedItemsProperty); }
@@ -152,6 +165,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OrderSelectedItemsByProperty =
             DependencyProperty.Register(nameof(OrderSelectedItemsBy), typeof(OrderSelectedItemsBy), typeof(MultiSelectionComboBox), new PropertyMetadata(OrderSelectedItemsBy.SelectedOrder, new PropertyChangedCallback(OnOrderSelectedItemsByChanged)));
 
+        /// <summary>
+        /// Gets or sets how the <see cref="SelectedItems"/> should be sorted
+        /// </summary>
         public OrderSelectedItemsBy OrderSelectedItemsBy
         {
             get { return (OrderSelectedItemsBy)GetValue(OrderSelectedItemsByProperty); }
@@ -167,6 +183,36 @@ namespace MahApps.Metro.Controls
             }
         }
 
+
+
+        /// <summary>Identifies the <see cref="SelectedItemContainerStyle"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemContainerStyleProperty = DependencyProperty.Register(nameof(SelectedItemContainerStyle), typeof(Style), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="Style"/> for the <see cref="SelectedItems"/>
+        /// </summary>
+        public Style SelectedItemContainerStyle
+        {
+            get { return (Style)GetValue(SelectedItemContainerStyleProperty); }
+            set { SetValue(SelectedItemContainerStyleProperty, value); }
+        }
+
+
+
+        /// <summary>Identifies the <see cref="SelectedItemContainerStyleSelector"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemContainerStyleSelectorProperty = DependencyProperty.Register(nameof(SelectedItemContainerStyleSelector), typeof(StyleSelector), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the <see cref="StyleSelector"/> for the <see cref="SelectedItemContainerStyle"/>
+        /// </summary>
+        public StyleSelector SelectedItemContainerStyleSelector
+        {
+            get { return (StyleSelector)GetValue(SelectedItemContainerStyleSelectorProperty); }
+            set { SetValue(SelectedItemContainerStyleSelectorProperty, value); }
+        }
+
+   
+
         /// <summary>Identifies the <see cref="Separator"/> dependency property.</summary>
         public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(nameof(Separator), typeof(object), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
 
@@ -177,18 +223,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (object)GetValue(SeparatorProperty); }
             set { SetValue(SeparatorProperty, value); }
-        }
-
-        /// <summary>Identifies the <see cref="SeparatorTemplate"/> dependency property.</summary>
-        public static readonly DependencyProperty SeparatorTemplateProperty = DependencyProperty.Register(nameof(SeparatorTemplate), typeof(DataTemplate), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or Sets the SeparatorTemplate. Gets only applied if the MultiselectionComboBox is not editable
-        /// </summary>
-        public DataTemplate SeparatorTemplate
-        {
-            get { return (DataTemplate)GetValue(SeparatorTemplateProperty); }
-            set { SetValue(SeparatorTemplateProperty, value); }
         }
 
         /// <summary>Identifies the <see cref="HasCustomText"/> dependency property.</summary>
@@ -310,29 +344,69 @@ namespace MahApps.Metro.Controls
             set { SetValue(DisabledPopupOverlayContentTemplateProperty, value); }
         }
 
-        /// <summary>Identifies the <see cref="SelectedItemsTemplate"/> dependency property.</summary>
-        public static readonly DependencyProperty SelectedItemsTemplateProperty = DependencyProperty.Register(nameof(SelectedItemsTemplate), typeof(DataTemplate), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="SelectedItemTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemTemplateProperty = DependencyProperty.Register(nameof(SelectedItemTemplate), typeof(DataTemplate), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the SelectedItemsTemplate
+        /// Gets or Sets the SelectedItemTemplate
         /// </summary>
-        public DataTemplate SelectedItemsTemplate
+        public DataTemplate SelectedItemTemplate
         {
-            get { return (DataTemplate)GetValue(SelectedItemsTemplateProperty); }
-            set { SetValue(SelectedItemsTemplateProperty, value); }
+            get { return (DataTemplate)GetValue(SelectedItemTemplateProperty); }
+            set { SetValue(SelectedItemTemplateProperty, value); }
         }
 
-        /// <summary>Identifies the <see cref="SelectedItemsTemplateSelector"/> dependency property.</summary>
-        public static readonly DependencyProperty SelectedItemsTemplateSelectorProperty = DependencyProperty.Register(nameof(SelectedItemsTemplateSelector), typeof(DataTemplateSelector), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+        /// <summary>Identifies the <see cref="SelectedItemTemplateSelector"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemTemplateSelectorProperty = DependencyProperty.Register(nameof(SelectedItemTemplateSelector), typeof(DataTemplateSelector), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or Sets the SelectedItemsTemplateSelector
+        /// Gets or Sets the SelectedItemTemplateSelector
         /// </summary>
-        public DataTemplateSelector SelectedItemsTemplateSelector
+        public DataTemplateSelector SelectedItemTemplateSelector
         {
-            get { return (DataTemplateSelector)GetValue(SelectedItemsTemplateSelectorProperty); }
-            set { SetValue(SelectedItemsTemplateSelectorProperty, value); }
+            get { return (DataTemplateSelector)GetValue(SelectedItemTemplateSelectorProperty); }
+            set { SetValue(SelectedItemTemplateSelectorProperty, value); }
         }
+
+
+        /// <summary>Identifies the <see cref="VerticalScrollBarVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(nameof(VerticalScrollBarVisibility), typeof(ScrollBarVisibility), typeof(MultiSelectionComboBox), new PropertyMetadata(ScrollBarVisibility.Auto));
+
+        /// <summary>
+        /// Gets or Sets if the vertical scrollbar is visible
+        /// </summary>
+        public ScrollBarVisibility VerticalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
+            set { SetValue(VerticalScrollBarVisibilityProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="HorizontalScrollBarVisibility"/> dependency property.</summary>
+        public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty = DependencyProperty.Register(nameof(HorizontalScrollBarVisibility), typeof(ScrollBarVisibility), typeof(MultiSelectionComboBox), new PropertyMetadata(ScrollBarVisibility.Auto));
+
+        /// <summary>
+        /// Gets or Sets if the horizontal scrollbar is visible
+        /// </summary>
+        public ScrollBarVisibility HorizontalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty); }
+            set { SetValue(HorizontalScrollBarVisibilityProperty, value); }
+        }
+
+
+        /// <summary>Identifies the <see cref="SelectedItemsPanelTemplate"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemsPanelTemplateProperty = DependencyProperty.Register(nameof(SelectedItemsPanelTemplate), typeof(ItemsPanelTemplate), typeof(MultiSelectionComboBox), new PropertyMetadata(null));
+        
+        /// <summary>
+        /// Gets or sets the <see cref="ItemsPanelTemplate"/> for the selected items.
+        /// </summary>
+        public ItemsPanelTemplate SelectedItemsPanelTemplate
+        {
+            get { return (ItemsPanelTemplate)GetValue(SelectedItemsPanelTemplateProperty); }
+            set { SetValue(SelectedItemsPanelTemplateProperty, value); }
+        }
+
 
         #endregion
 
@@ -406,6 +480,9 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            PART_SelectedItemsScrollViewer = GetTemplateChild(nameof(PART_SelectedItemsScrollViewer)) as ScrollViewer;
+            PART_SelectedItemsScrollViewer.MouseLeftButtonUp += PART_SelectedItemsScrollViewer_MouseLeftButtonUp;
+
             PART_EditableTextBox = GetTemplateChild(nameof(PART_EditableTextBox)) as TextBox;
             PART_EditableTextBox.TextChanged += PART_EditableTextBox_TextChanged;
 
@@ -420,6 +497,12 @@ namespace MahApps.Metro.Controls
             // Do update the text 
             UpdateEditableText();
             UpdateDisplaySelectedItems();
+        }
+
+        private void PART_SelectedItemsScrollViewer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            // If we have a ScrollViewer we need to handle this event here as it will not be forwarded to the ToggleButton
+            SetCurrentValue(IsDropDownOpenProperty, BooleanBoxes.Box(!IsDropDownOpen));
         }
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)

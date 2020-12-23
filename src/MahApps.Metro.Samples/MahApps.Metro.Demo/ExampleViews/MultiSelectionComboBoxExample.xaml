@@ -12,19 +12,52 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader.Horizontal}" TargetType="mah:MetroHeader" />
-        <Style TargetType="GroupBox" BasedOn="{StaticResource MahApps.Styles.GroupBox}">
+        <Style BasedOn="{StaticResource MahApps.Styles.GroupBox}" TargetType="GroupBox">
             <Setter Property="Margin" Value="5,5,5,0" />
         </Style>
 
-        <ObjectDataProvider x:Key="Demo.Enums.OrderSelectedItemsBy" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <!-- Selection Order -->
+        <ObjectDataProvider x:Key="Demo.Enums.OrderSelectedItemsBy"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="mah:OrderSelectedItemsBy" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
-        <ObjectDataProvider x:Key="Demo.Enums.SelectionMode" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <!-- Selection Mode -->
+        <ObjectDataProvider x:Key="Demo.Enums.SelectionMode"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="SelectionMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- HorizontalAlignment -->
+        <ObjectDataProvider x:Key="Demo.Enums.HorizontalAlignment"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="HorizontalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <!-- VerticalAlignment -->
+        <ObjectDataProvider x:Key="Demo.Enums.VerticalAlignment"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="VerticalAlignment" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+        <!-- ScrollViewerVisibility -->
+        <ObjectDataProvider x:Key="Demo.Enums.ScrollBarVisibility"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ScrollBarVisibility" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -33,10 +66,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="250" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" MinWidth="50"/>
+            <ColumnDefinition Width="*" MinWidth="50" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer Grid.Column="0" Grid.IsSharedSizeScope="True" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="0"
+                      Grid.IsSharedSizeScope="True"
+                      VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <GroupBox Header="Text">
                     <StackPanel>
@@ -55,7 +90,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="MahApps Helper">
+                <GroupBox Header="MahApps TextBox-Helper">
                     <StackPanel>
                         <mah:MetroHeader Header="Watermark">
                             <TextBox Text="{Binding ElementName=mscb_Example, Path=(mah:TextBoxHelper.Watermark)}" />
@@ -72,17 +107,25 @@
                     </StackPanel>
                 </GroupBox>
 
+                <GroupBox Header="MahApps ScrollViewer-Helper">
+                    <StackPanel>
+                        <mah:MetroHeader Header="IsHorizontalScrollWheelEnabled">
+                            <mah:ToggleSwitch IsOn="{Binding ElementName=mscb_Example, Path=(mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled)}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
                 <GroupBox Header="Selection">
                     <StackPanel>
                         <mah:MetroHeader Header="SelectionMode">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=SelectionMode}" ItemsSource="{Binding Source={StaticResource Demo.Enums.SelectionMode}}"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.SelectionMode}}" SelectedItem="{Binding ElementName=mscb_Example, Path=SelectionMode}" />
                         </mah:MetroHeader>
                         <mah:MetroHeader Header="OrderSelectedItemsBy">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Demo.Enums.OrderSelectedItemsBy}}" SelectedItem="{Binding ElementName=mscb_Example, Path=OrderSelectedItemsBy}" />
                         </mah:MetroHeader>
-                        
+
                         <mah:MetroHeader Header="DisplayMemberPath">
-                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=DisplayMemberPath}" mah:TextBoxHelper.ClearTextButton="True">
+                            <ComboBox mah:TextBoxHelper.ClearTextButton="True" SelectedItem="{Binding ElementName=mscb_Example, Path=DisplayMemberPath}">
                                 <system:String>Title</system:String>
                                 <system:String>Artist</system:String>
                                 <system:String>Genre</system:String>
@@ -90,7 +133,32 @@
                         </mah:MetroHeader>
                     </StackPanel>
                 </GroupBox>
+
+                <GroupBox Header="Layout">
+                    <StackPanel>
+                        <mah:MetroHeader Header="MaxHeight">
+                            <mah:NumericUpDown Value="{Binding ElementName=mscb_Example, Path=MaxHeight}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="MaxWidth">
+                            <mah:NumericUpDown Value="{Binding ElementName=mscb_Example, Path=MaxWidth}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="HorizontalAlignment">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=HorizontalAlignment}" ItemsSource="{Binding Source={StaticResource Demo.Enums.HorizontalAlignment}}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="VerticalAlignment">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=VerticalAlignment}" ItemsSource="{Binding Source={StaticResource Demo.Enums.VerticalAlignment}}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="HorizontalScrollBarVisibility">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=HorizontalScrollBarVisibility}" ItemsSource="{Binding Source={StaticResource Demo.Enums.ScrollBarVisibility}}" />
+                        </mah:MetroHeader>
+                        <mah:MetroHeader Header="VerticalScrollBarVisibility">
+                            <ComboBox SelectedItem="{Binding ElementName=mscb_Example, Path=VerticalScrollBarVisibility}" ItemsSource="{Binding Source={StaticResource Demo.Enums.ScrollBarVisibility}}" />
+                        </mah:MetroHeader>
+                    </StackPanel>
+                </GroupBox>
+
             </StackPanel>
+            
         </ScrollViewer>
 
         <GridSplitter Grid.Column="1"
@@ -101,12 +169,13 @@
             <Grid>
                 <mah:MultiSelectionComboBox x:Name="mscb_Example"
                                             Margin="5"
+                                            Style="{DynamicResource MahApps.Styles.MultiSelectionComboBox.Horizontal}"
                                             VerticalAlignment="Center"
-                                            Separator=", "
-                                            SelectedItemsTemplate="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}"
-                                            TextWrapping="Wrap"
+                                            ItemsSource="{Binding Albums}"
                                             SelectedItem="{Binding MultiSelectionComboBoxSelectedAlbum}"
-                                            ItemsSource="{Binding Albums}" />
+                                            SelectedItemTemplate="{DynamicResource MahApps.DataTemplates.MultiSelectionComboBox.Removeable}"
+                                            Separator=", "
+                                            TextWrapping="Wrap" />
             </Grid>
         </GroupBox>
     </Grid>
