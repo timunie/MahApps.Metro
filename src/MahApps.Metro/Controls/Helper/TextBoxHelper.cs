@@ -941,7 +941,7 @@ namespace MahApps.Metro.Controls
                 {
                     if (multiSelectionComboBox.HasCustomText)
                     {
-                        multiSelectionComboBox.UpdateEditableText();
+                        multiSelectionComboBox.ResetEditableText();
                     }
                     else
                     {
