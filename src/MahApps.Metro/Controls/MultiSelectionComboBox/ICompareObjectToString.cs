@@ -28,7 +28,7 @@ namespace MahApps.Metro.Controls
     [MarkupExtensionReturnType(typeof(DefaultObjectToStringComparer))]
     public class DefaultObjectToStringComparer : MarkupExtension, ICompareObjectToString
     {
-        static DefaultObjectToStringComparer _Instance; 
+        private static DefaultObjectToStringComparer _Instance; 
 
         /// <inheritdoc/>
         public bool CheckIfStringMatchesObject(string input, object objectToCompare, StringComparison stringComparison, string stringFormat)
@@ -48,7 +48,7 @@ namespace MahApps.Metro.Controls
             {
                 objectText = objectToCompare.ToString();
             }
-            else if (stringFormat.Contains('{') && stringFormat.Contains('{'))
+            else if (stringFormat.Contains('{') && stringFormat.Contains('}'))
             {
                 objectText = string.Format(stringFormat, objectToCompare);
             }

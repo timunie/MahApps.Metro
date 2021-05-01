@@ -64,9 +64,12 @@ namespace MahApps.Metro.Controls.Helper
         /// <returns></returns>
         public static object Eval(Binding binding, object source)
         {
-            if (binding is null) throw new ArgumentNullException(nameof(binding));
+            if (binding is null)
+            {
+                throw new ArgumentNullException(nameof(binding));
+            }
 
-            Binding newBinding = new Binding()
+            Binding newBinding = new Binding
             {
                 Source = source,
                 AsyncState = binding.AsyncState,
@@ -91,7 +94,7 @@ namespace MahApps.Metro.Controls.Helper
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
         /// <param name="dependencyObject">optional: The <see cref="DependencyObject"/> to evalutate</param>
         /// <returns>The resulting object</returns>
-        public static object Eval(Binding binding, DependencyObject dependencyObject = null)
+        public static object Eval(Binding binding, DependencyObject dependencyObject)
         {
             dependencyObject ??= new DependencyObject();
 
@@ -105,6 +108,16 @@ namespace MahApps.Metro.Controls.Helper
                 BindingOperations.SetBinding(dependencyObject, DummyTextProperty, binding);
                 return dependencyObject.GetValue(DummyTextProperty);
             }
+        }
+
+        /// <summary>
+        /// Evaluates a defined <see cref="Binding"/> on the given <see cref="DependencyObject"/>
+        /// </summary>
+        /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
+        /// <returns>The resulting object</returns>
+        public static object Eval(Binding binding)
+        {
+            return Eval(binding, null);
         }
     }
 }

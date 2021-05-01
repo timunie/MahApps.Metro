@@ -33,6 +33,8 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(typeof(MultiSelectionComboBox)));
             TextProperty.OverrideMetadata(typeof(MultiSelectionComboBox), new FrameworkPropertyMetadata(String.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, new PropertyChangedCallback(OnTextChanged)));
+            CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
+            CommandManager.RegisterClassCommandBinding(typeof(MultiSelectionComboBox), new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
         }
 
         #endregion
@@ -138,13 +140,17 @@ namespace MahApps.Metro.Controls
                 || value == SelectionMode.Extended;
         }
 
-        /// <summary>Identifies the <see cref="SelectedItems"/> dependency property.</summary>
-        public static readonly DependencyProperty SelectedItemsProperty = 
-            DependencyProperty.Register(
+
+        internal static readonly DependencyPropertyKey SelectedItemsPropertyKey = 
+            DependencyProperty.RegisterReadOnly(
                 nameof(SelectedItems),
                 typeof(IList),
                 typeof(MultiSelectionComboBox),
                 new PropertyMetadata((IList)null));
+
+        /// <summary>Identifies the <see cref="SelectedItems"/> dependency property.</summary>
+        public static readonly DependencyProperty SelectedItemsProperty = SelectedItemsPropertyKey.DependencyProperty;
+            
 
         /// <summary>
         /// The currently selected items.
@@ -152,19 +158,21 @@ namespace MahApps.Metro.Controls
         [Bindable(true), Category("Appearance"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IList SelectedItems
         {
-            get
-            {
-                return PART_PopupListBox?.SelectedItems;
-            }
+            get { return (IList)GetValue(SelectedItemsProperty); }
+            protected set { SetValue(SelectedItemsPropertyKey, value); }
         }
 
-        /// <summary>Identifies the <see cref="DisplaySelectedItems"/> dependency property.</summary>
-        public static readonly DependencyProperty DisplaySelectedItemsProperty =
-            DependencyProperty.Register(
+
+
+        internal static readonly DependencyPropertyKey DisplaySelectedItemsPropertyKey =
+            DependencyProperty.RegisterReadOnly(
                 nameof(DisplaySelectedItems),
                 typeof(IEnumerable),
                 typeof(MultiSelectionComboBox),
                 new PropertyMetadata((IEnumerable)null));
+
+        /// <summary>Identifies the <see cref="DisplaySelectedItems"/> dependency property.</summary>
+        public static readonly DependencyProperty DisplaySelectedItemsProperty = DisplaySelectedItemsPropertyKey.DependencyProperty;
 
         /// <summary>
         /// Gets the <see cref="SelectedItems"/> in the specified order which was set via <see cref="OrderSelectedItemsBy"/>
@@ -172,6 +180,7 @@ namespace MahApps.Metro.Controls
         public IEnumerable DisplaySelectedItems
         {
             get { return (IEnumerable)GetValue(DisplaySelectedItemsProperty); }
+            protected set { SetValue(DisplaySelectedItemsPropertyKey, value); }
         }
 
         /// <summary>Identifies the <see cref="OrderSelectedItemsBy"/> dependency property.</summary>
@@ -246,13 +255,17 @@ namespace MahApps.Metro.Controls
             set { SetValue(SeparatorProperty, value); }
         }
 
-        /// <summary>Identifies the <see cref="HasCustomText"/> dependency property.</summary>
-        public static readonly DependencyProperty HasCustomTextProperty = 
-            DependencyProperty.Register(
+
+        internal static readonly DependencyPropertyKey HasCustomTextPropertyKey = 
+            DependencyProperty.RegisterReadOnly(
                 nameof(HasCustomText),
                 typeof(bool),
                 typeof(MultiSelectionComboBox),
                 new PropertyMetadata(false));
+
+
+        /// <summary>Identifies the <see cref="HasCustomText"/> dependency property.</summary>
+        public static readonly DependencyProperty HasCustomTextProperty = HasCustomTextPropertyKey.DependencyProperty;
 
         /// <summary>
         /// Indicates if the text is userdefined
@@ -260,6 +273,7 @@ namespace MahApps.Metro.Controls
         public bool HasCustomText
         {
             get { return (bool)GetValue(HasCustomTextProperty); }
+            protected set { SetValue(HasCustomTextPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         /// <summary>Identifies the <see cref="TextWrapping"/> dependency property.</summary>
@@ -351,8 +365,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ResetEditableText()
         {
-            SetCurrentValue(HasCustomTextProperty, BooleanBoxes.FalseBox);
+            var oldSelectionStart = PART_EditableTextBox.SelectionStart;
+            var oldSelectionLength = PART_EditableTextBox.SelectionLength;
+
+            HasCustomText = false;
             UpdateEditableText();
+
+            PART_EditableTextBox.SelectionStart = oldSelectionStart;
+            PART_EditableTextBox.SelectionLength = oldSelectionLength;
         }
 
         /// <summary>Identifies the <see cref="DisabledPopupOverlayContent"/> dependency property.</summary>
@@ -519,7 +539,9 @@ namespace MahApps.Metro.Controls
         private void UpdateEditableText()
         {
             if (PART_EditableTextBox is null || SelectedItems is null)
+            {
                 return;
+            }
 
             var selectedItemsText = GetSelectedItemsText();
 
@@ -578,19 +600,18 @@ namespace MahApps.Metro.Controls
 
             bool hasCustomText = !((string.IsNullOrEmpty(selectedItemsText) && string.IsNullOrEmpty(Text)) || string.Equals(Text, selectedItemsText, EditableTextStringComparision));
 
-            SetCurrentValue(HasCustomTextProperty, BooleanBoxes.Box(hasCustomText));
+            HasCustomText = hasCustomText;
         }
 
         private void UpdateDisplaySelectedItems(OrderSelectedItemsBy orderBy)
         {
-            switch (orderBy)
+            if (orderBy == OrderSelectedItemsBy.SelectedOrder)
             {
-                case OrderSelectedItemsBy.SelectedOrder:
-                    SetCurrentValue(DisplaySelectedItemsProperty, SelectedItems);
-                    break;
-                case OrderSelectedItemsBy.ItemsSourceOrder:
-                    SetCurrentValue(DisplaySelectedItemsProperty, ((IEnumerable<object>)PART_PopupListBox.SelectedItems).OrderBy(o => Items.IndexOf(o)));
-                    break;
+                DisplaySelectedItems = SelectedItems;
+            }
+            else if (orderBy == OrderSelectedItemsBy.ItemsSourceOrder)
+            {
+                DisplaySelectedItems= ((IEnumerable<object>)SelectedItems).OrderBy(o => Items.IndexOf(o));
             }
         }
 
@@ -638,7 +659,7 @@ namespace MahApps.Metro.Controls
                         SelectedItems.Clear();
                         break;
                     default:
-                        break;
+                        throw new NotSupportedException("Unknown SelectionMode");
                 }
                 return;
             }
@@ -671,7 +692,7 @@ namespace MahApps.Metro.Controls
                 case SelectionMode.Multiple:
                 case SelectionMode.Extended:
 
-                    var strings = Text.Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
+                    var strings = Text.Split(new [] { Separator }, StringSplitOptions.RemoveEmptyEntries);
 
                     SelectedItems.Clear();
 
@@ -698,7 +719,7 @@ namespace MahApps.Metro.Controls
                     }
                     break;
                 default:
-                    break;
+                    throw new NotSupportedException("Unknown SelectionMode");
             }
 
 
@@ -752,7 +773,7 @@ namespace MahApps.Metro.Controls
         // Clear Text Command
         public static RoutedUICommand ClearContentCommand { get; } = new RoutedUICommand("ClearContent", nameof(ClearContentCommand), typeof(MultiSelectionComboBox));
 
-        private void ExecutedClearContentCommand(object sender, ExecutedRoutedEventArgs e)
+        private static void ExecutedClearContentCommand(object sender, ExecutedRoutedEventArgs e)
         {
             if (sender is MultiSelectionComboBox multiSelectionCombo)
             {
@@ -771,12 +792,14 @@ namespace MahApps.Metro.Controls
                         case SelectionMode.Extended:
                             multiSelectionCombo.SelectedItems.Clear();
                             break;
+                        default:
+                            throw new NotSupportedException("Unknown SelectionMode");
                     }
                 }
             }
         }
 
-        private void CanExecuteClearContentCommand(object sender, CanExecuteRoutedEventArgs e)
+        private static void CanExecuteClearContentCommand(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = false;
             if (sender is MultiSelectionComboBox multiSelectionComboBox)
@@ -787,7 +810,7 @@ namespace MahApps.Metro.Controls
 
         public static RoutedUICommand RemoveItemCommand { get; } = new RoutedUICommand("Remove item", nameof(RemoveItemCommand), typeof(MultiSelectionComboBox));
 
-        private void RemoveItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private static void RemoveItemCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             if (sender is MultiSelectionComboBox multiSelectionCombo && multiSelectionCombo.SelectedItems.Contains(e.Parameter))
             {
@@ -800,7 +823,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void RemoveItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private static void RemoveItemCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = false;
             if (sender is MultiSelectionComboBox)
@@ -857,14 +880,12 @@ namespace MahApps.Metro.Controls
             {
                 PART_PopupListBox.SelectionChanged -= PART_PopupListBox_SelectionChanged;
                 PART_PopupListBox.SelectionChanged += PART_PopupListBox_SelectionChanged;
+                SelectedItems = PART_PopupListBox.SelectedItems;
             }
             else
             {
                 throw new MahAppsException($"The template part \"{nameof(PART_PopupListBox)}\" could not be found.");
             }
-
-            CommandBindings.Add(new CommandBinding(ClearContentCommand, ExecutedClearContentCommand, CanExecuteClearContentCommand));
-            CommandBindings.Add(new CommandBinding(RemoveItemCommand, RemoveItemCommand_Executed, RemoveItemCommand_CanExecute));
 
             // Do update the text 
             UpdateEditableText();
@@ -889,7 +910,10 @@ namespace MahApps.Metro.Controls
             }
 
             // If we have the ItemsSource set, we need to exit here. 
-            if (ReadLocalValue(ItemsSourceProperty) != DependencyProperty.UnsetValue) return;
+            if ((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? true)
+            {
+                return;
+            }
 
             switch (e.Action)
             {
@@ -908,11 +932,7 @@ namespace MahApps.Metro.Controls
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    // TODO Add Handler
-                    break;
                 case NotifyCollectionChangedAction.Move:
-                    // TODO Add Handler
-                    break;
                 case NotifyCollectionChangedAction.Reset:
                     PART_PopupListBox.Items.Clear();
                     foreach (var item in Items)
@@ -921,7 +941,7 @@ namespace MahApps.Metro.Controls
                     }
                     break;
                 default:
-                    break;
+                    throw new NotSupportedException("Unsupported NotifyCollectionChangedAction");
             }
         }
 
@@ -951,10 +971,16 @@ namespace MahApps.Metro.Controls
 
             PART_PopupListBox.Focus();
 
-            if (PART_PopupListBox.Items.Count == 0) return;
+            if (PART_PopupListBox.Items.Count == 0)
+            {
+                return;
+            }
 
             var index = PART_PopupListBox.SelectedIndex;
-            if (index < 0) index = 0;
+            if (index < 0)
+            {
+                index = 0;
+            }
 
             Action action = () =>
             {
@@ -1052,7 +1078,10 @@ namespace MahApps.Metro.Controls
             Loaded -= MultiSelectionComboBox_Loaded;
 
             // If we have the ItemsSource set, we need to exit here. 
-            if (ReadLocalValue(ItemsSourceProperty) != DependencyProperty.UnsetValue) return;
+            if ((PART_PopupListBox?.Items as IList)?.IsReadOnly ?? true)
+            {
+                return;
+            }
 
             PART_PopupListBox.Items.Clear();
             foreach (var item in Items)

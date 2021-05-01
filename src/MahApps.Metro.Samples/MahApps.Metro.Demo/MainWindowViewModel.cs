@@ -537,7 +537,7 @@ namespace MetroDemo
 
         public bool IsToggleSwitchVisible { get; set; }
 
-        public ObservableCollection<string> Animals { get; } = new ObservableCollection<string>()
+        public ObservableCollection<string> Animals { get; } = new ObservableCollection<string>
         {
             "African elephant",
             "Ant",

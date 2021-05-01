@@ -32,7 +32,7 @@ namespace MetroDemo.Models
                 return null;
             }
 
-            MetroDialogSettings dialogSettings = new MetroDialogSettings()
+            MetroDialogSettings dialogSettings = new MetroDialogSettings
             {
                 AffirmativeButtonText = "Yes",
                 NegativeButtonText = "No",
