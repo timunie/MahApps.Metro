@@ -4,13 +4,7 @@
 
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace MetroDemo.Models
 {
@@ -39,7 +33,7 @@ namespace MetroDemo.Models
                 DefaultButtonFocus = MessageDialogResult.Affirmative
             };
 
-            if (_dialogCoordinator.ShowModalMessageExternal(_mainWindowViewModel, "Add Animal", $"Do you want to add \"{input}\" to the animals list?",  MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
+            if (this._dialogCoordinator.ShowModalMessageExternal(this._mainWindowViewModel, "Add Animal", $"Do you want to add \"{input}\" to the animals list?",  MessageDialogStyle.AffirmativeAndNegative, dialogSettings) == MessageDialogResult.Affirmative)
             {
                 return input.Trim();
             }

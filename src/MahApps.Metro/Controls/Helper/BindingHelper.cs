@@ -16,20 +16,20 @@ namespace MahApps.Metro.Controls.Helper
         /// <summary>
         /// A dummy property to initialize the binding to evaluate
         /// </summary>
-        private static readonly DependencyProperty DummyProperty = DependencyProperty.RegisterAttached(
-            "Dummy",
-            typeof(object),
-            typeof(BindingHelper),
-            new UIPropertyMetadata(null));
+        private static readonly DependencyProperty DummyProperty
+            = DependencyProperty.RegisterAttached("Dummy",
+                                                  typeof(object),
+                                                  typeof(BindingHelper),
+                                                  new UIPropertyMetadata(null));
 
         /// <summary>
         /// A dummy property to initialize the binding to evaluate. This property supports also string format.
         /// </summary>
-        private static readonly DependencyProperty DummyTextProperty = DependencyProperty.RegisterAttached(
-            "DummyText",
-            typeof(string),
-            typeof(BindingHelper),
-            new UIPropertyMetadata(null));
+        private static readonly DependencyProperty DummyTextProperty
+            = DependencyProperty.RegisterAttached("DummyText",
+                                                  typeof(string),
+                                                  typeof(BindingHelper),
+                                                  new UIPropertyMetadata(null));
 
         /// <summary>
         /// Evaluates a defined <see cref="Binding"/>-path on the given object
@@ -48,7 +48,7 @@ namespace MahApps.Metro.Controls.Helper
         /// </summary>
         /// <param name="source">the object to evaluate</param>
         /// <param name="expression">the binding expression to evaluate</param>
-        /// <param name="format">the stringformat to use</param>
+        /// <param name="format">the string format to use</param>
         /// <returns>the result of the <see cref="Binding"/></returns>
         public static object Eval(object source, string expression, string format)
         {
@@ -70,21 +70,21 @@ namespace MahApps.Metro.Controls.Helper
             }
 
             Binding newBinding = new Binding
-            {
-                Source = source,
-                AsyncState = binding.AsyncState,
-                BindingGroupName = binding.BindingGroupName,
-                BindsDirectlyToSource = binding.BindsDirectlyToSource,
-                Path = binding.Path,
-                Converter = binding.Converter,
-                ConverterCulture = binding.ConverterCulture,
-                ConverterParameter = binding.ConverterParameter,
-                FallbackValue = binding.FallbackValue,
-                IsAsync = binding.IsAsync,
-                Mode = BindingMode.OneWay,
-                StringFormat = binding.StringFormat,
-                TargetNullValue = binding.TargetNullValue
-            };
+                                 {
+                                     Source = source,
+                                     AsyncState = binding.AsyncState,
+                                     BindingGroupName = binding.BindingGroupName,
+                                     BindsDirectlyToSource = binding.BindsDirectlyToSource,
+                                     Path = binding.Path,
+                                     Converter = binding.Converter,
+                                     ConverterCulture = binding.ConverterCulture,
+                                     ConverterParameter = binding.ConverterParameter,
+                                     FallbackValue = binding.FallbackValue,
+                                     IsAsync = binding.IsAsync,
+                                     Mode = BindingMode.OneWay,
+                                     StringFormat = binding.StringFormat,
+                                     TargetNullValue = binding.TargetNullValue
+                                 };
             return Eval(newBinding);
         }
 
@@ -92,7 +92,7 @@ namespace MahApps.Metro.Controls.Helper
         /// Evaluates a defined <see cref="Binding"/> on the given <see cref="DependencyObject"/>
         /// </summary>
         /// <param name="binding">The <see cref="Binding"/> to evaluate</param>
-        /// <param name="dependencyObject">optional: The <see cref="DependencyObject"/> to evalutate</param>
+        /// <param name="dependencyObject">optional: The <see cref="DependencyObject"/> to evaluate</param>
         /// <returns>The resulting object</returns>
         public static object Eval(Binding binding, DependencyObject dependencyObject)
         {
