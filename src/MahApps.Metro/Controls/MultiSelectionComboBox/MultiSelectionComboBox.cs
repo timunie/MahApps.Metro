@@ -672,10 +672,6 @@ namespace MahApps.Metro.Controls
 
                     var strings = Text.Split(new[] { Separator }, StringSplitOptions.RemoveEmptyEntries);
 
-                    for (int i = SelectedItems.Count; i > 0; i--)
-                    {
-                        SelectedItems.RemoveAt(i - 1);
-                    }
                     SelectedItems.Clear();
 
                     for (int i = 0; i < strings.Length; i++)
