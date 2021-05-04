@@ -105,11 +105,7 @@ namespace MetroDemo
 
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
-            if (flyoutDemo == null)
-            {
-                flyoutDemo = new FlyoutDemo();
-                flyoutDemo.Closed += (o, args) => flyoutDemo = null;
-            }
+                var flyoutDemo = new FlyoutDemo();
 
             flyoutDemo.Launch();
         }

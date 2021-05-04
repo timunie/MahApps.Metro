@@ -4,6 +4,7 @@
 
 using System;
 using System.Windows;
+using ControlzEx.Theming;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -41,12 +42,16 @@ namespace MetroDemo.ExampleWindows
 
         public void Launch()
         {
-            Owner = Application.Current.MainWindow;
+            // Owner = Application.Current.MainWindow;
             // only for this window, because we allow minimizing
             if (WindowState == WindowState.Minimized)
             {
                 WindowState = WindowState.Normal;
             }
+
+            var rnd = new Random();
+
+            ThemeManager.Current.ChangeTheme(this, ThemeManager.Current.Themes[rnd.Next(0, ThemeManager.Current.Themes.Count - 1)]);
 
             Show();
         }
